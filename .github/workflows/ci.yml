@@ -2,9 +2,9 @@ name: Workflow
 
 on:
     push:
-        branches: [main]
+        branches: [main, green]
     pull_request:
-        branches: [main]
+        branches: [main, green]
 
 jobs:
     build:
@@ -23,6 +23,12 @@ jobs:
               run: |
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
+
+            - name: Run Black
+              run: black --check .
+
+            - name: Run Flake8
+              run: flake8 .
 
             - name: Run pytest
               run: pytest -V
